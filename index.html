@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website - Programming Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Welcome</h1>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <h2>Hello! 👋</h2>
+            <p>This is your new website. Edit the files to make it yours.</p>
+        </section>
+
+        <section id="quiz" class="content">
+            <h2>Programming Language Quiz</h2>
+            <div id="quiz-container">
+                <div id="language-selection" class="language-select">
+                    <p>Choose a language to test your knowledge:</p>
+                    <div class="language-buttons">
+                        <button class="lang-btn" data-language="java">Java</button>
+                        <button class="lang-btn" data-language="python">Python</button>
+                        <button class="lang-btn" data-language="c">C</button>
+                        <button class="lang-btn" data-language="javascript">JavaScript</button>
+                    </div>
+                </div>
+
+                <div id="quiz-area" style="display: none;">
+                    <div class="quiz-header">
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill"></div>
+                        </div>
+                        <p class="quiz-progress"><span id="current-question">1</span> / <span id="total-questions">20</span></p>
+                    </div>
+
+                    <div class="quiz-content">
+                        <h3 id="question-text"></h3>
+                        <div id="options-container" class="options"></div>
+                    </div>
+
+                    <button id="next-btn" class="quiz-btn" style="display: none;">Next Question</button>
+                </div>
+
+                <div id="results-area" style="display: none;">
+                    <h3>Quiz Complete! 🎉</h3>
+                    <div class="score-display">
+                        <p class="score-text">Your Score</p>
+                        <p class="score-number"><span id="final-score">0</span> / <span id="total-questions-result">20</span></p>
+                        <p class="score-percentage"><span id="percentage">0</span>%</p>
+                    </div>
+                    <button id="restart-btn" class="quiz-btn">Take Another Quiz</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="content">
+            <h2>About</h2>
+            <p>Tell people about yourself, your projects, or your business here.</p>
+        </section>
+
+        <section id="contact" class="content">
+            <h2>Contact</h2>
+            <p>Add your contact info or social links here.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 My Website. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="questions.js"></script>
+    <script src="quiz.js"></script>
+</body>
+</html>
