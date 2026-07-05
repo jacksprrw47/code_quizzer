@@ -50,15 +50,18 @@ if ('serviceWorker' in navigator) {
 const downloadBtn = document.getElementById('download-btn');
 let deferredPrompt;
 
-// Detect if mobile
-function isMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+// Detect if desktop (hide button on desktop only)
+function isDesktop() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return !(/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent));
 }
 
-// Only show download button on mobile
-if (!isMobile()) {
-    downloadBtn.style.display = 'none';
-}
+// Hide download button on desktop only
+window.addEventListener('DOMContentLoaded', () => {
+    if (isDesktop()) {
+        downloadBtn.style.display = 'none';
+    }
+});
 
 // Listen for PWA install prompt
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -67,8 +70,12 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 downloadBtn.addEventListener('click', async () => {
+    console.log('Download button clicked');
+    console.log('Deferred prompt available:', !!deferredPrompt);
+
     if (deferredPrompt) {
         // If PWA prompt available, use it
+        console.log('Using PWA install prompt');
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         if (outcome === 'accepted') {
@@ -77,6 +84,7 @@ downloadBtn.addEventListener('click', async () => {
         deferredPrompt = null;
     } else {
         // Fallback: Show Android instructions
+        console.log('Showing Android instructions');
         showAndroidInstructions();
     }
 });
