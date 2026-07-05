@@ -35,9 +35,15 @@ console.log('Welcome to my website! Feel free to customize the HTML, CSS, and Ja
 
 // Register service worker for PWA functionality
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('Service Worker registered'))
-        .catch(err => console.log('Service Worker registration failed'));
+    navigator.serviceWorker.register('/sw.js')
+        .then(reg => {
+            console.log('✅ Service Worker registered');
+        })
+        .catch(err => {
+            console.error('❌ Service Worker registration failed:', err);
+        });
+} else {
+    console.warn('⚠️ Service Workers not supported');
 }
 
 // PWA Install Prompt
@@ -50,26 +56,34 @@ function isMobile() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
+console.log('📱 Device: ' + (isMobile() ? 'Mobile' : 'Desktop'));
+
 // Show install button on mobile
 if (isMobile()) {
     installBtn.style.display = 'block';
+    console.log('✅ Install button shown on mobile');
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
+    console.log('🎉 beforeinstallprompt event fired - PWA ready to install!');
     e.preventDefault();
     deferredPrompt = e;
     installBtn.style.display = 'block';
 });
 
 installBtn.addEventListener('click', async () => {
+    console.log('Install button clicked. Deferred prompt:', !!deferredPrompt);
+
     if (deferredPrompt) {
         // If PWA prompt available, use it
+        console.log('📥 Showing PWA install prompt...');
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         console.log(`User response: ${outcome}`);
         deferredPrompt = null;
     } else {
         // Otherwise, show instructions modal
+        console.log('📋 Showing installation instructions modal');
         openInstallModal();
     }
 });
@@ -83,6 +97,22 @@ function closeInstallModal() {
 }
 
 window.addEventListener('appinstalled', () => {
-    console.log('App installed');
+    console.log('🎉 App successfully installed!');
     deferredPrompt = null;
 });
+
+// Debug: Log manifest loading
+fetch('/manifest.json')
+    .then(r => {
+        if (r.ok) {
+            console.log('✅ manifest.json loaded successfully');
+            return r.json();
+        }
+        throw new Error('Manifest failed to load');
+    })
+    .then(manifest => {
+        console.log('✅ Manifest is valid:', manifest);
+    })
+    .catch(err => {
+        console.error('❌ Manifest error:', err);
+    });
