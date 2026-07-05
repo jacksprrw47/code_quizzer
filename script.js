@@ -32,3 +32,10 @@ function resetQuizUI() {
 
 // Log a welcome message
 console.log('Welcome to my website! Feel free to customize the HTML, CSS, and JavaScript files.');
+
+// Register service worker for PWA functionality
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('Service Worker registered'))
+        .catch(err => console.log('Service Worker registration failed'));
+}
