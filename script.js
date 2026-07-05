@@ -46,31 +46,52 @@ if ('serviceWorker' in navigator) {
     console.warn('⚠️ Service Workers not supported');
 }
 
-// PWA Install Prompt
+// Download/Install App
+const downloadBtn = document.getElementById('download-btn');
 let deferredPrompt;
-const installBtn = document.getElementById('install-btn');
 
+// Detect if mobile
+function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Only show download button on mobile
+if (!isMobile()) {
+    downloadBtn.style.display = 'none';
+}
+
+// Listen for PWA install prompt
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    installBtn.style.display = 'block';
 });
 
-installBtn.addEventListener('click', async () => {
-    if (!deferredPrompt) {
-        console.log('Install not available yet');
-        return;
+downloadBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+        // If PWA prompt available, use it
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            alert('App installed! Check your home screen.');
+        }
+        deferredPrompt = null;
+    } else {
+        // Fallback: Show Android instructions
+        showAndroidInstructions();
     }
-
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log(`User response: ${outcome}`);
-    deferredPrompt = null;
-    installBtn.style.display = 'none';
 });
+
+function showAndroidInstructions() {
+    alert(
+        '📱 Install on Android:\n\n' +
+        '1. Tap the 3 dots menu (⋮) in top right\n' +
+        '2. Tap "Install app" or "Add to Home Screen"\n' +
+        '3. Tap "Install"\n\n' +
+        '✅ App icon will appear on your home screen!'
+    );
+}
 
 window.addEventListener('appinstalled', () => {
-    console.log('App installed successfully!');
+    alert('✅ App installed successfully! Check your home screen.');
     deferredPrompt = null;
-    installBtn.style.display = 'none';
 });

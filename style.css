@@ -50,7 +50,7 @@ nav a:hover {
     color: #667eea;
 }
 
-.install-btn {
+.download-btn {
     padding: 0.5rem 1rem;
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
@@ -62,12 +62,12 @@ nav a:hover {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.install-btn:hover {
+.download-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
 }
 
-.install-btn:active {
+.download-btn:active {
     transform: translateY(0);
 }
 
