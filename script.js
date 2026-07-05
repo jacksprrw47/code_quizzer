@@ -43,6 +43,17 @@ if ('serviceWorker' in navigator) {
 // PWA Install Prompt
 let deferredPrompt;
 const installBtn = document.getElementById('install-btn');
+const installModal = document.getElementById('install-modal');
+
+// Detect device type
+function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Show install button on mobile
+if (isMobile()) {
+    installBtn.style.display = 'block';
+}
 
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -52,16 +63,26 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 installBtn.addEventListener('click', async () => {
     if (deferredPrompt) {
+        // If PWA prompt available, use it
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         console.log(`User response: ${outcome}`);
         deferredPrompt = null;
-        installBtn.style.display = 'none';
+    } else {
+        // Otherwise, show instructions modal
+        openInstallModal();
     }
 });
+
+function openInstallModal() {
+    installModal.style.display = 'flex';
+}
+
+function closeInstallModal() {
+    installModal.style.display = 'none';
+}
 
 window.addEventListener('appinstalled', () => {
     console.log('App installed');
     deferredPrompt = null;
-    installBtn.style.display = 'none';
 });

@@ -29,6 +29,34 @@
     </header>
 
     <main>
+        <!-- Install Instructions Modal -->
+        <div id="install-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeInstallModal()">&times;</button>
+                <h2>Install Code Quizzer</h2>
+
+                <div id="android-instructions" class="install-instructions">
+                    <h3>📱 Android (Chrome)</h3>
+                    <ol>
+                        <li>Tap the <strong>⬇ Install App</strong> button OR menu (⋮)</li>
+                        <li>Tap <strong>"Install app"</strong> or <strong>"Add to Home Screen"</strong></li>
+                        <li>Confirm the installation</li>
+                        <li>App icon appears on your home screen!</li>
+                    </ol>
+                </div>
+
+                <div id="iphone-instructions" class="install-instructions">
+                    <h3>🍎 iPhone (Safari)</h3>
+                    <ol>
+                        <li>Tap the <strong>Share</strong> button (⬆️)</li>
+                        <li>Scroll down and tap <strong>"Add to Home Screen"</strong></li>
+                        <li>Tap <strong>"Add"</strong> in the top right</li>
+                        <li>App icon appears on your home screen!</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
         <section id="home" class="hero">
             <h2>Hello! 👋</h2>
             <p>This is your new website. Edit the files to make it yours.</p>
